@@ -1,6 +1,11 @@
-import React, { createContext, ReactNode } from 'react'
+import React, { createContext, ReactNode, useContext } from 'react'
 
-const DataContext = createContext({
+
+interface IDataContext {
+
+}
+
+const DataContext = createContext<IDataContext>({
 
 })
 
@@ -17,3 +22,5 @@ const DataProvider = ({children} : {children: ReactNode}) => {
 }
 
 export default DataProvider
+
+export const useData = () => useContext(DataContext)

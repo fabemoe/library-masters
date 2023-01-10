@@ -2,7 +2,14 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div>Header</div>
+    <div
+    className='flex centered-aligned'
+    style={{
+        height: "50px"
+    }}
+    >
+        asd
+    </div>
   )
 }
 
