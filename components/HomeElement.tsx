@@ -1,5 +1,7 @@
+import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import Logo from '../graphics/Logo'
+import useKeypress from '../hooks/useKeyPress'
 import { useAuth } from '../providers/AuthProvider'
 import styles from './HomeElement.module.css'
 import SearchBar from './SearchBar'
@@ -8,13 +10,21 @@ const HomeElement = () => {
 
     const [searchValue, setSearchValue] = useState("")
     const {isLoggedIn} = useAuth()
+
+    const {push, replace} = useRouter()
+
+    useKeypress("Enter", () => {
+        push({pathname: "/searchresults", query: {query: searchValue}})
+    })
+
     
   return (
     <div className='centered column' style={{
         height: "100%",
         width: "100%",
         gap: "20px"
-    }}>
+    }}
+    >
         <div
         className={styles.container}
         >
@@ -27,6 +37,7 @@ const HomeElement = () => {
 
             {/* Show All Books Button */}
             <button
+            onClick={() => push("/searchresults")}
             style={{
                 border: "2px solid black", 
                 backgroundColor: "transparent",
@@ -87,7 +98,7 @@ const HomeElement = () => {
                         </button>
                     </>
                     ) : (
-                        <button style={{backgroundColor: "black"}} className={styles.button}>
+                        <button onClick={() => push("/searchresults" + `?query=${searchValue.toString()}`)} style={{backgroundColor: "black"}} className={styles.button}>
                             Search
                         </button>
                     )}

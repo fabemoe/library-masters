@@ -23,6 +23,8 @@ const SearchBar = ({searchValue, setSearchValue} : {searchValue: string, setSear
             padding: "17.5px 20px",
         }}
         placeholder="Enter title or ISBN..."
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
          />
     </div>
   )
