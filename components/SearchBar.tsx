@@ -1,15 +1,17 @@
 import React from 'react'
 import styles from './SearchBar.module.css'
 
-const SearchBar = ({searchValue, setSearchValue} : {searchValue: string, setSearchValue: (val: string) => void}) => {
+
+const SearchBar = ({searchValue, setSearchValue, style} : {searchValue: string, setSearchValue: (val: string) => void, style?: React.CSSProperties}) => {
   return (
     <div
     style={{
-        outline: "none",
-        border: "none",
-        backgroundColor: "white",
-        borderRadius: "1000px",
-        width: "100%"
+      outline: "none",
+      border: "none",
+      backgroundColor: "white",
+      borderRadius: "1000px",
+      width: "100%",
+      ...style,
 
     }}
     >

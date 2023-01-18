@@ -5,17 +5,25 @@ import useKeypress from '../hooks/useKeyPress'
 import { useAuth } from '../providers/AuthProvider'
 import styles from './HomeElement.module.css'
 import SearchBar from './SearchBar'
+import { useData } from '../providers/DataProvider'
 
 const HomeElement = () => {
 
     const [searchValue, setSearchValue] = useState("")
     const {isLoggedIn} = useAuth()
+    const {books} = useData()
 
     const {push, replace} = useRouter()
 
     useKeypress("Enter", () => {
-        push({pathname: "/searchresults", query: {query: searchValue}})
-    })
+        push({pathname: "/searchresults", query: {query: searchValue.toString()}})
+    }, [searchValue])
+
+    const handleSurprise = () => {
+        const randomNumber = Math.ceil(Math.random()*10000)%books.length
+        const title = books[randomNumber].title
+        push("/searchresults" + `?query=${title}`)
+    }
 
     
   return (
@@ -90,10 +98,10 @@ const HomeElement = () => {
                 <div className="centered" style={{gap: "10px"}}>
                     {!isLoggedIn ? (
                     <>
-                        <button style={{backgroundColor: "#277EFF"}} className={styles.button}>
+                        <button onClick={() => push("/searchresults" + `?query=${searchValue.toString()}`)} style={{backgroundColor: "#277EFF"}} className={styles.button}>
                             Search
                         </button>
-                        <button style={{backgroundColor: "#277EFF"}} className={styles.button}>
+                        <button onClick={() => handleSurprise()}   style={{backgroundColor: "#277EFF"}} className={styles.button}>
                             Suprise Me
                         </button>
                     </>
