@@ -3,7 +3,7 @@ import { ICustomer, useData } from '../../providers/DataProvider'
 import Customer from '../../components/Customer'
 import { useRouter } from 'next/router'
 
-const index = () => {
+const Index = () => {
 
     const {customers} = useData()
     const {query, asPath} = useRouter()
@@ -65,7 +65,7 @@ const index = () => {
         >
             {
                 filteredBooks.map((book) => (
-                    <Customer customer={book} />
+                    <Customer key={book.id} customer={book} />
                     ))
                 }
         </div>
@@ -73,4 +73,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

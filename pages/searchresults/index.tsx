@@ -3,7 +3,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Book from '../../components/Book'
 import { IBook, useData } from '../../providers/DataProvider'
 
-const index = () => {
+const Index = () => {
 
     const {books} = useData()
     const {query, asPath} = useRouter()
@@ -81,4 +81,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index
