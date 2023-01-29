@@ -13,7 +13,7 @@ import { usePopUps } from '../providers/PopUpProvider'
 const Detail = ({copy} : {copy: IBookCopy}) => {
     const {isLoggedIn} = useAuth()
 
-    const {openMap } = usePopUps()
+    const {openMap, openRented } = usePopUps()
     
     return (
         <div
@@ -53,7 +53,9 @@ const Detail = ({copy} : {copy: IBookCopy}) => {
                 </button>)
                 :
                 (
-                    <button className="centered" style={{gap: "5px", padding: "3px 10px", borderRadius: "100px"}}>
+                    <button className="centered" style={{gap: "5px", padding: "3px 10px", borderRadius: "100px"}}
+                    onClick={() => openRented()}
+                    >
                         <LocalMallRoundedIcon fontSize="small" />
                         Rent
                     </button>
@@ -68,6 +70,7 @@ const DetailDialog = ({open, book, onClose, mode} : {open: boolean, book: IBook 
     const [modalMode, setModalMode] = useState(mode)
 
     const {enqueueSnackbar} = useSnackbar()
+
 
     const {isLoggedIn} = useAuth()
 
