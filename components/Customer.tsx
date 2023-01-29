@@ -1,14 +1,15 @@
 import React from 'react'
-import { IBook } from '../providers/DataProvider'
+import { IBook, ICustomer } from '../providers/DataProvider'
 import { useAuth } from '../providers/AuthProvider'
 import { DeleteRounded, EditRounded, MoreHorizRounded, MoreRounded } from '@mui/icons-material'
 import styles from './Book.module.css'
 import { usePopUps } from '../providers/PopUpProvider'
+import Person2RoundedIcon from '@mui/icons-material/Person2Rounded';
 
-const Book = ({book} : {book: IBook}) => {
+const Customer = ({customer} : {customer: ICustomer}) => {
 
     const {isLoggedIn} = useAuth()
-    const {openDetails} = usePopUps()
+    const {openCustomerDetails, openRentedBooks} = usePopUps()
   return (
     <div
     className='flex'
@@ -25,14 +26,12 @@ const Book = ({book} : {book: IBook}) => {
             width: "20%",
             height: "100%",
             borderRadius: "20px",
-            overflow: "hidden"
+            overflow: "hidden",
+            backgroundColor: "#e4e4e4"
         }}
+        className="centered"
         >
-            <img src={book?.imageURL} style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover"
-            }} alt="" />
+            <Person2RoundedIcon />
         </div>
 
         {/* Linke Seite des Buches */}
@@ -61,26 +60,32 @@ const Book = ({book} : {book: IBook}) => {
                         fontWeight: "600"
                     }}
                     >
-                        {book?.title}
+                        {customer.name}
                     </span>
                     <span
                     style={{
                         color: "#959595"
                     }}
                     >
-                        {book?.author}
+                        {customer.street + " " + customer.houseNumber}
                     </span>
                     <span
                     style={{
-                        padding: "4px 10px",
-                        width: "fit-content",
-                        borderRadius: "100px",
-                        backgroundColor: book.copies.length > 0 ? "lightgreen" : "red"
+                        color: "#959595"
                     }}
                     >
-                        {book?.copies?.filter((book) => {
-                            return book?.availability == 1
-                        }).length}x available
+                        {
+                        customer.zip + " " + customer.town
+                    }
+                    </span>
+                    <span
+                    style={{
+                        color: "#959595"
+                    }}
+                    >
+                        {
+                        customer.email
+                    }
                     </span>
                 </div>
                 <span
@@ -89,29 +94,13 @@ const Book = ({book} : {book: IBook}) => {
                     fontSize: "12px"
                 }}
                 >
-                    ISBN: {book?.isbn ?? "123"}
+                    {
+                        "ID: " + customer.id
+                    }
                 </span>
             </div>
 
-            {/* Description */}
-            <div
-            className='flex column'
-            style={{
-                width: "40%",
-                height: "100%",
-                gap: "5px"
-            }}
-            >
-                <span
-                style={{
-                    fontSize: "12px",
-                    color: "#959595"
-                }}
-                >Description:</span>
-                <p>
-                    {book?.description}
-                </p>
-            </div>
+           
 
             {/* Button-Section */}
             <div
@@ -124,18 +113,18 @@ const Book = ({book} : {book: IBook}) => {
                     isLoggedIn ? (
                         <>
                             <button
-                            onClick={() => openDetails(book, "edit")}
+                            onClick={() => openCustomerDetails(customer, "edit")}
                             className={'centered ' + styles.button}
                             >
                                 <EditRounded fontSize='inherit' />
                                 Edit
                             </button>
                             <button
-                            onClick={() => openDetails(book, "show")}
+                            onClick={() => openRentedBooks(customer)}
                             className={'centered ' + styles.button}
                             >
                                 <MoreHorizRounded fontSize='inherit'/>
-                                Show details
+                                Rented Books
                             </button>
                             <button
                             className={'centered ' + styles.button}
@@ -154,7 +143,7 @@ const Book = ({book} : {book: IBook}) => {
                         <>
                             <button
                             className={'centered ' + styles.button}
-                            onClick={() => openDetails(book, "show")}
+
                             >
                                 <MoreHorizRounded fontSize='inherit'/>
                                 Show details
@@ -169,4 +158,4 @@ const Book = ({book} : {book: IBook}) => {
   )
 }
 
-export default Book
+export default Customer

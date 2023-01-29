@@ -1,5 +1,24 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
+interface ICustomerDTO {
+    name: string
+    street: string
+    houseNumber: string
+    town: string
+    zip: string
+    email: string
+   
+}
+
+export interface ICustomer extends ICustomerDTO {
+    id: string
+    rented: {
+        book: IBook,
+        from: string,
+        to: string
+    }[]
+}
+
 interface IBookDTO {
     title: string
     author: string
@@ -10,7 +29,7 @@ interface IBookDTO {
     isbn: string
 }
 
-interface IBookCopy {
+export interface IBookCopy {
     id: string
     location: number
     availability: 1 | 0
@@ -23,10 +42,12 @@ export interface IBook extends IBookDTO {
 
 interface IDataContext {
     books: IBook[]
+    customers: ICustomer[]
 }
 
 const DataContext = createContext<IDataContext>({
-    books: []
+    books: [],
+    customers: []
 })
 
 const DataProvider = ({children} : {children: ReactNode}) => {
@@ -50,21 +71,44 @@ const DataProvider = ({children} : {children: ReactNode}) => {
                 {
                     ...book,
                     //TODO Delete!
-                    imageURL: "https://books.google.com/books?id=zyTCAlFPjgYC&printsec=frontcover&img=1&zoom=6&edge=curl&source=gbs_api",
+                    imageURL: "/Bild.png",
                     copies
                 }
             )
         })
-        console.log(modifiedBooks)
+        
+        //@ts-ignore
+        const modifiedCustomers: ICustomer[] = customerData.map((customer: ICustomerDTO) => {
+
+            
+            return ({
+                ...customer,
+                id: Math.ceil(Math.random()*10000).toString(),
+                rented: [
+                    ...modifiedBooks.map((book) => {
+                        return {
+                            book,
+                            from: new Date().toLocaleDateString(),
+                            to: new Date().toLocaleDateString()
+                        }
+                    })
+                ]
+            })
+        })
+
+        console.log(modifiedCustomers)
+        setCustomers(modifiedCustomers)
         setBooks(modifiedBooks)
     }, [])
 
     const [books, setBooks] = useState<IBook[]>([])
+    const [customers, setCustomers] = useState<ICustomer[]>([])
     
   return (
     <DataContext.Provider
     value={{
-        books
+        books,
+        customers
     }}
     >
         {children}
@@ -159,4 +203,47 @@ const bookData: IBookDTO[] = [
         page_count:540
     }
 
+]
+
+const customerData: ICustomerDTO[] = [
+    {
+        name: "Max Musterman",
+        street: "Universitätsstraße",
+        houseNumber: "67",
+        town: "Klagenfurt",
+        email: "asidnfhj@edu.aau.at",
+        zip: "9020",
+    },
+    {
+        name: "Max Muster",
+        street: "Universitätsstraße",
+        houseNumber: "67",
+        town: "Klagenfurt",
+        email: "asidnfhj@edu.aau.at",
+        zip: "9020",
+    },
+    {
+        name: "Max Mann",
+        street: "Universitätsstraße",
+        houseNumber: "67",
+        town: "Klagenfurt",
+        email: "asidnfhj@edu.aau.at",
+        zip: "9020",
+    },
+    {
+        name: "Max Max",
+        street: "Universitätsstraße",
+        houseNumber: "67",
+        town: "Klagenfurt",
+        email: "asidnfhj@edu.aau.at",
+        zip: "9020",
+    },
+    {
+        name: "Max Mustermax",
+        street: "Universitätsstraße",
+        houseNumber: "67",
+        town: "Klagenfurt",
+        email: "asidnfhj@edu.aau.at",
+        zip: "9020",
+    },
 ]

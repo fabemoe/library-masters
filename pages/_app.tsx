@@ -3,14 +3,20 @@ import type { AppProps } from 'next/app'
 import DataProvider from '../providers/DataProvider'
 import AuthProvider from '../providers/AuthProvider'
 import Header from '../components/Header'
+import PopUpProvider from '../providers/PopUpProvider'
+import { SnackbarProvider } from 'notistack'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <DataProvider>
-        <Header />
-        <Component {...pageProps} />
-      </DataProvider>
-    </AuthProvider>
+    <SnackbarProvider>
+      <AuthProvider>
+        <DataProvider>
+          <PopUpProvider>
+            <Header />
+            <Component {...pageProps} />
+          </PopUpProvider>
+        </DataProvider>
+      </AuthProvider>
+    </SnackbarProvider>
   )
 }

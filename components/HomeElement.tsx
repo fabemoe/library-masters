@@ -6,8 +6,11 @@ import { useAuth } from '../providers/AuthProvider'
 import styles from './HomeElement.module.css'
 import SearchBar from './SearchBar'
 import { useData } from '../providers/DataProvider'
+import { usePopUps } from '../providers/PopUpProvider'
 
 const HomeElement = () => {
+
+    const {openDetails} = usePopUps()
 
     const [searchValue, setSearchValue] = useState("")
     const {isLoggedIn} = useAuth()
@@ -117,13 +120,13 @@ const HomeElement = () => {
         {
             isLoggedIn && (
                 <div className='flex stretched-justify' style={{width: "50%"}}>
-                   <button className={styles.bottomButton}>
+                   <button onClick={() => openDetails(null, "add")} className={styles.bottomButton}>
                        Add Book
                    </button>
                    <button className={styles.bottomButton}>
                        Rent/Return
                    </button>
-                   <button className={styles.bottomButton}>
+                   <button onClick={() => push("/customers")} className={styles.bottomButton}>
                        Customer Management
                    </button>
                 </div>

@@ -4,10 +4,13 @@ import { useAuth } from '../providers/AuthProvider'
 import { DeleteRounded, EditRounded, MoreHorizRounded, MoreRounded } from '@mui/icons-material'
 import styles from './Book.module.css'
 import { usePopUps } from '../providers/PopUpProvider'
+import { useSnackbar } from 'notistack'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-const Book = ({book} : {book: IBook}) => {
+const CustomerBook = ({book, rented} : {book: IBook, rented: {from: string, to: string}}) => {
 
-    const {isLoggedIn} = useAuth()
+    const {enqueueSnackbar} = useSnackbar()
+
     const {openDetails} = usePopUps()
   return (
     <div
@@ -16,7 +19,7 @@ const Book = ({book} : {book: IBook}) => {
         width: "100%",
         backgroundColor: "#f5f5f5",
         borderRadius: "30px",
-        height: "300px",
+        height: "250px",
         padding: "30px"
     }}
     >
@@ -107,10 +110,23 @@ const Book = ({book} : {book: IBook}) => {
                     fontSize: "12px",
                     color: "#959595"
                 }}
-                >Description:</span>
-                <p>
-                    {book?.description}
-                </p>
+                >Rent Date:</span>
+                <span>
+                    {
+                        rented.from
+                    }
+                </span>
+                <span
+                style={{
+                    fontSize: "12px",
+                    color: "#959595"
+                }}
+                >To:</span>
+                <span>
+                    {
+                        rented.to
+                    }
+                </span>
             </div>
 
             {/* Button-Section */}
@@ -120,38 +136,17 @@ const Book = ({book} : {book: IBook}) => {
                 gap: "7px"
             }}
             >
-                {
-                    isLoggedIn ? (
-                        <>
-                            <button
-                            onClick={() => openDetails(book, "edit")}
+                <button
                             className={'centered ' + styles.button}
-                            >
-                                <EditRounded fontSize='inherit' />
-                                Edit
-                            </button>
-                            <button
-                            onClick={() => openDetails(book, "show")}
-                            className={'centered ' + styles.button}
-                            >
-                                <MoreHorizRounded fontSize='inherit'/>
-                                Show details
-                            </button>
-                            <button
-                            className={'centered ' + styles.button}
+                            onClick={() => enqueueSnackbar("Successfully returned", {variant: "success"})}
                             style={{
-                                backgroundColor: "lightpink",
-                                color: "red"
+                                backgroundColor: "#277eef",
+                                color: "white"
                             }}
                             >
-                                <DeleteRounded fontSize='inherit'/>
-                                Delete
+                               <CheckCircleIcon fontSize="small" />
+                                Return
                             </button>
-                        </>
-                    )
-                    :
-                    (
-                        <>
                             <button
                             className={'centered ' + styles.button}
                             onClick={() => openDetails(book, "show")}
@@ -159,9 +154,6 @@ const Book = ({book} : {book: IBook}) => {
                                 <MoreHorizRounded fontSize='inherit'/>
                                 Show details
                             </button>
-                        </>
-                    )
-                }
             </div>
             
         </div>
@@ -169,4 +161,4 @@ const Book = ({book} : {book: IBook}) => {
   )
 }
 
-export default Book
+export default CustomerBook

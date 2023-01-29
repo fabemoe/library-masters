@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './SearchBar.module.css'
 
 
-const SearchBar = ({searchValue, setSearchValue, style} : {searchValue: string, setSearchValue: (val: string) => void, style?: React.CSSProperties}) => {
+const SearchBar = ({searchValue, setSearchValue, style, placeholder} : {searchValue: string, setSearchValue: (val: string) => void, style?: React.CSSProperties, placeholder?: string}) => {
   return (
     <div
     style={{
@@ -24,7 +24,7 @@ const SearchBar = ({searchValue, setSearchValue, style} : {searchValue: string, 
             width: "100%",
             padding: "17.5px 20px",
         }}
-        placeholder="Enter title or ISBN..."
+        placeholder={placeholder ?? "Enter title or ISBN..."}
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
          />
