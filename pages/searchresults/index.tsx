@@ -73,7 +73,7 @@ const Index = () => {
         >
             {
                 filteredBooks.map((book) => (
-                    <Book book={book} />
+                    <Book key={book.isbn} book={book} />
                     ))
                 }
         </div>
