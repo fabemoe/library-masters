@@ -34,7 +34,7 @@ const CustomerBook = ({book, rented} : {book: IBook, rented: {from: string, to: 
             <img src={book?.imageURL} style={{
                 width: "100%",
                 height: "100%",
-                objectFit: "cover"
+                objectFit: "contain"
             }} alt="" />
         </div>
 

@@ -81,6 +81,7 @@ const RentDialog = ({open, customer, onClose} : {open: boolean, customer?: ICust
                     Rent
                 </button>
                 <button
+                onClick={() => {enqueueSnackbar("Successfully returned the book", {variant: "success"}); onClose()}}
                 style={{
                     padding: "10px 20px",
                     borderRadius: "200px",

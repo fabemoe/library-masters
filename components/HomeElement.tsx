@@ -10,7 +10,7 @@ import { usePopUps } from '../providers/PopUpProvider'
 
 const HomeElement = () => {
 
-    const {openDetails} = usePopUps()
+    const {openDetails, openRented} = usePopUps()
 
     const [searchValue, setSearchValue] = useState("")
     const {isLoggedIn} = useAuth()
@@ -123,7 +123,7 @@ const HomeElement = () => {
                    <button onClick={() => openDetails(null, "add")} className={styles.bottomButton}>
                        Add Book
                    </button>
-                   <button className={styles.bottomButton}>
+                   <button onClick={() => openRented()} className={styles.bottomButton}>
                        Rent/Return
                    </button>
                    <button onClick={() => push("/customers")} className={styles.bottomButton}>

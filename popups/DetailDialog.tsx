@@ -132,7 +132,7 @@ const DetailDialog = ({open, book, onClose, mode} : {open: boolean, book: IBook 
                     borderRadius: "20px"
                 }}
                 >
-                    <img src={book?.imageURL} style={{width: "100%", height: "100%", objectFit: "cover"}} />
+                    <img src={book?.imageURL} style={{width: "100%", height: "100%", objectFit: "contain"}} />
                 </div>
                 {/* Right */}
                 <div className="flex column" style={{padding: "10px 20px", gap: "5px", overflowY: "scroll", width: "60%"}}>
